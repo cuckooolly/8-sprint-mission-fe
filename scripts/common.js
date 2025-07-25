@@ -60,7 +60,6 @@ function remove_error_message(input_element, error_id) {
     isError_arr.pop(); // 에러가 비활성화 됐음을 의미하는 true 삭제.
 }
 
-
 /* 이메일 입력 확인 로직 */
 const email_input = document.getElementById("email");
 
@@ -184,10 +183,22 @@ if (login_btn && isError_arr.length === 0) { // 로그인 버튼이 존재하고
 // 로그인 버튼을 클릭한 이후의 행위를 기술합니다.
 function handleLogin(event) {
     event.preventDefault();
+
+    // 요구사항) input 폼에 에러가 있을 경우, 버튼을 비활성화
+    if (isError_arr.length > 0) {
+        return;
+    }
     
+    // 입력된 이메일과 비밀번호 데이터 저장
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
+    // 요구사항) input 폼에 빈 값이 있을 경우, 버튼을 비활성화
+    if (!email || !password) {
+        return;
+    }
+
+    // 입력된 값과, USER_DATA에 저장된 계정 정보가 일치하는지 확인
     const attempt_data = USER_DATA.find(user => user.email === email && user.password === password);
     if (attempt_data) {
         window.open('items.html', '_self');
@@ -206,9 +217,24 @@ if (signup_btn && isError_arr.length === 0) { // 회원가입 버튼이 존재�
 // 회원가입 버튼을 클릭한 이후의 행위를 기술합니다.
 function handleSignup(event) {
     event.preventDefault();
+
+    // 요구사항) input 폼에 에러가 있을 경우, 버튼을 비활성화
+    if (isError_arr.length > 0) {
+        return;
+    }
+
+    // 입력된 이메일, 비밀번호, 비밀번호 확인, 닉네임 데이터 저장
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+    const password_check = document.getElementById('passwordConfirmation').value;
+    const nickname = document.getElementById('nickname').value;
 
+    // 요구사항) input 폼에 빈 값이 있을 경우, 버튼을 비활성화
+    if (!email || !password || !password_check || !nickname) {
+        return;
+    }
+
+    // 입력된 이메일 주소가, USER_DATA에 저장되어 있는지 확인
     if (USER_DATA.find(user => user.email === email)) {
         alert('사용 중인 이메일입니다.');
         return;
