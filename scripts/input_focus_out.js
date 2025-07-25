@@ -1,3 +1,5 @@
+// 질문) 해당 코드에서 캡슐화 혹은 모듈화 등을 더 진행해야 할 부분이 있을지 궁금합니다.
+
 /* 공통 함수 관련 로직 */
 // 주어진 에러메시지를, 정해진 Element에 표시하는 함수
 function show_error_message(input_element, error_id, error_message) {
@@ -52,8 +54,33 @@ function email_focusout(event) {
     
 }
 
+/* 닉네임 입력 확인 로직 */
+const nickname_input = document.getElementById("nickname");
+
+// EventListener 등록
+if (nickname_input) {
+    nickname_input.addEventListener("focusout", nickname_focusout);
+    nickname_input.addEventListener("focus", nickname_focus);
+}
+
+// 에러 메시지를 제거하는 함수(remove_error_message) 호출
+function nickname_focus(event){
+    remove_error_message(nickname_input, 'nickname-error');
+}
+
+// 에러 메시지를 출력하는 함수(show_error_message) 호출
+function nickname_focusout(event) {
+    const nickname_input_value = nickname_input.value;
+    // 요구사항) 닉네임 input에서 focus out 할 때, 값이 없을 경우 input에 빨강색 테두리와 아래에 “이메일을 입력해주세요.” 빨강색 에러 메세지를 보입니다.
+    if (!nickname_input_value){
+        show_error_message(nickname_input, 'nickname-error', "닉네임을 입력해주세요.");
+        return;
+    }
+}
+
 /* 비밀번호 입력 확인 로직 */
 const password_input = document.getElementById("password");
+const password_check_input = document.getElementById("passwordConfirmation");
 
 // EventListener 등록
 if (password_input){
@@ -61,9 +88,18 @@ if (password_input){
     password_input.addEventListener("focus", password_focus);
 }
 
+if (password_check_input){
+    password_check_input.addEventListener("focusout", password_check_focusout);
+    password_check_input.addEventListener("focus", password_check_focus);
+}
+
 // 에러 메시지를 제거하는 함수(remove_error_message) 호출
 function password_focus(event){
     remove_error_message(password_input, 'password-error');
+}
+
+function password_check_focus(event){
+    remove_error_message(password_check_input, 'password-check-error');
 }
 
 // 에러 메시지를 출력하는 함수(show_error_message) 호출
@@ -79,6 +115,22 @@ function password_focusout(event){
     // 요구사항) 비밀번호 input에서 focus out 할 때, 값이 8자 미만일 경우 아래에 “비밀번호를 8자 이상 입력해주세요.” 에러 메세지를 보입니다.
     if (password_input_value.length < 8){
         show_error_message(password_input, 'password-error', '비밀번호를 8자 이상 입력해주세요.');
+        return;
+    }
+}
+
+function password_check_focusout(event){
+    const password_check_input_value = password_check_input.value;
+
+    // 요구사항) 비밀번호 input에서 focus out 할 때, 값이 없을 경우 아래에 “비밀번호를 입력해주세요.” 에러 메세지를 보입니다.
+    if (!password_check_input_value){
+        show_error_message(password_check_input, 'password-check-error', '비밀번호를 입력해주세요.');
+        return;
+    }
+
+    // 요구사항) 비밀번호 input에서 focus out 할 때, 값이 8자 미만일 경우 아래에 “비밀번호를 8자 이상 입력해주세요.” 에러 메세지를 보입니다.
+    if (password_check_input_value.length < 8){
+        show_error_message(password_check_input, 'password-check-error', '비밀번호를 8자 이상 입력해주세요.');
         return;
     }
 }
