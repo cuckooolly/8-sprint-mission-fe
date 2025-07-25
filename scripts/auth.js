@@ -20,6 +20,7 @@ document.addEventListener('click', function(e) {
 ```
 */
 
+// 로그인을 위한, User login data
 const USER_DATA = [
     { email: '1@1', password: "1" }, // 테스트용 데이터
     { email: 'codeit1@codeit.com', password: "codeit101!" },
@@ -30,12 +31,14 @@ const USER_DATA = [
     { email: 'codeit6@codeit.com', password: "codeit606!" },
 ];
 
-// login.html의 로그인 버튼의 Click 이벤트 핸들러
+/* login.html의 로그인 버튼의 Click 이벤트 핸들러 */
 const login_btn = document.getElementById('login-button');
+
 if (login_btn) { // 로그인 버튼이 존재하는 경우에만, 이벤트 리스너 작동
     login_btn.addEventListener('click', handleLogin);
 }
 
+// 로그인 버튼을 클릭한 이후의 행위를 기숳합니다.
 function handleLogin(event) {
     event.preventDefault();
     const email = document.getElementById('email').value;
@@ -49,12 +52,14 @@ function handleLogin(event) {
     }
 }
 
-// signup.html의 회원가입 버튼의 Click 이벤트 핸들러
+/* signup.html의 회원가입 버튼의 Click 이벤트 핸들러 */
 const signup_btn = document.getElementById('signup-button');
+
 if (signup_btn) { // 회원가입 버튼이 존재하는 경우에만, 이벤트 리스너 작동
     signup_btn.addEventListener('click', handleSignup);
 }
 
+// 회원가입 버튼을 클릭한 이후의 행위를 기술합니다.
 function handleSignup(event) {
     event.preventDefault();
     const email = document.getElementById('email').value;
