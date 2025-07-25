@@ -1,5 +1,42 @@
 // 질문) 해당 코드에서 캡슐화 혹은 모듈화 등을 더 진행해야 할 부분이 있을지 궁금합니다.
 
+/*
+질문) 
+여러 개의 html 파일에 스크립트를 적용할 경우에, Conflict가 발생합니다. 
+예를 들어, login.html과 signup.html에 login-button이라는 ID를 가진 버튼과 signup-button이라는 ID를 가진 버튼이 있을 때
+두 html 코드에 이 스크립트를 적용하면, "login_btn.addEventListener('click', handleLogin);"에서 에러가 발생하여 더이상 아래에 있는 코드가 실행되지 않는 현상이 있습니다.
+이러한 현상을 아래에 처리한 if문을 처리한 방법이외에, 다른 방법들이 있을지 궁금합니다.
+
+답변) 
+1. 페이지별 스크립트 분리 -> 함수는 공통의 파일에 저장하되, 이벤트 리스너는 각각의 파일에서 호출한다.
+2. 이벤트 위임을 이용 -> 엘리먼트 전체에서 일어날 수 있는 이벤트를, 자식 엘리먼트 아디든 클릭할 때 발동
+```jsx
+document.addEventListener('click', function(e) {
+    if (e.target.id === 'login-button') {
+        handleLogin(e);
+    }
+    if (e.target.id === 'signup-button') {
+        handleSignup(e);
+    }
+});
+```
+*/
+
+/* 전역 변수 선언 */
+// 로그인을 위한, User login data
+const USER_DATA = [
+    { email: '1@1.com', password: "1" }, // 테스트용 데이터
+    { email: 'codeit1@codeit.com', password: "codeit101!" },
+    { email: 'codeit2@codeit.com', password: "codeit202!" },
+    { email: 'codeit3@codeit.com', password: "codeit303!" },
+    { email: 'codeit4@codeit.com', password: "codeit404!" },
+    { email: 'codeit5@codeit.com', password: "codeit505!" },
+    { email: 'codeit6@codeit.com', password: "codeit606!" },
+];
+
+// 에러상태를 표시하기 위한 전역 변수
+let isError_arr = [];
+
 /* 공통 함수 관련 로직 */
 // 주어진 에러메시지를, 정해진 Element에 표시하는 함수
 function show_error_message(input_element, error_id, error_message) {
@@ -9,6 +46,7 @@ function show_error_message(input_element, error_id, error_message) {
         error_element.textContent = error_message;
         error_element.classList.add("show");
     }
+    isError_arr.push(true); // 에러가 활성화 됐음을 의미하는 true 추가.
 }
 
 // 표시된 에러메시지를, 정해진 Element로부터 제거하는 함수
@@ -19,6 +57,7 @@ function remove_error_message(input_element, error_id) {
         error_element.textContent = "";
         error_element.classList.remove("show");
     }
+    isError_arr.pop(); // 에러가 비활성화 됐음을 의미하는 true 삭제.
 }
 
 
@@ -132,5 +171,48 @@ function password_check_focusout(event){
     if (password_check_input_value.length < 8){
         show_error_message(password_check_input, 'password-check-error', '비밀번호를 8자 이상 입력해주세요.');
         return;
+    }
+}
+
+/* login.html의 로그인 버튼의 Click 이벤트 핸들러 */
+const login_btn = document.getElementById('login-button');
+
+if (login_btn && isError_arr.length === 0) { // 로그인 버튼이 존재하고 에러가 없는 경우에만, 이벤트 리스너 작동
+    login_btn.addEventListener('click', handleLogin);
+}
+
+// 로그인 버튼을 클릭한 이후의 행위를 기술합니다.
+function handleLogin(event) {
+    event.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    const attempt_data = USER_DATA.find(user => user.email === email && user.password === password);
+    if (attempt_data) {
+        window.open('items.html', '_self');
+    } else {
+        alert('비밀번호가 일치하지 않습니다.');
+    }
+}
+
+/* signup.html의 회원가입 버튼의 Click 이벤트 핸들러 */
+const signup_btn = document.getElementById('signup-button');
+
+if (signup_btn && isError_arr.length === 0) { // 회원가입 버튼이 존재하는 경우에만, 이벤트 리스너 작동
+    signup_btn.addEventListener('click', handleSignup);
+}
+
+// 회원가입 버튼을 클릭한 이후의 행위를 기술합니다.
+function handleSignup(event) {
+    event.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    if (USER_DATA.find(user => user.email === email)) {
+        alert('사용 중인 이메일입니다.');
+        return;
+    } else {
+        window.open('login.html', '_self');
     }
 }
