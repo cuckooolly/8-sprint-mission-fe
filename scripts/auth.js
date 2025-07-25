@@ -1,3 +1,10 @@
+/*
+질문) 여러 개의 html 파일에 스크립트를 적용할 경우에, Conflict가 발생합니다. 
+예를 들어, login.html과 signup.html에 login-button이라는 ID를 가진 버튼과 signup-button이라는 ID를 가진 버튼이 있을 때
+두 html 코드에 이 스크립트를 적용하면, "login_btn.addEventListener('click', handleLogin);"에서 에러가 발생하여 더이상 아래에 있는 코드가 실행되지 않는 현상이 있습니다.
+이러한 현상을 아래에 처리한 if문을 처리한 방법이외에, 다른 방법들이 있을지 궁금합니다.
+*/
+
 const USER_DATA = [
     { email: '1@1', password: "1" }, // 테스트용 데이터
     { email: 'codeit1@codeit.com', password: "codeit101!" },
