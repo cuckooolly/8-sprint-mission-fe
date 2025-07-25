@@ -91,3 +91,23 @@
   /* 밑줄과 텍스트 사이 간격을 조정하고 싶다면 text-underline-offset을 사용하면 돼요. */
   text-underline-offset: 2px;
 }
+
+.input-item input.error{
+  border: 2px solid #dc2626;
+}
+
+.input-item input.error:focus{
+  border: 2px solid #dc2626;
+}
+
+.error-message {
+  color: #dc2626;
+  font-size: 14px;
+  margin-top: 8px;
+  margin-left: 4px;
+  display: none; /* 기본적으로 숨김 */
+}
+
+.error-message.show {
+  display: block; /* 에러가 발생할 경우 표시 */
+}

@@ -69,6 +69,7 @@
             type="email"
             placeholder="이메일을 입력해 주세요"
           />
+          <div class="error-message" id="email-error"></div>
         </div>
         <div class="input-item">
           <label for="password">비밀번호</label>
@@ -100,7 +101,9 @@
                 alt="비밀번호 숨김 상태 아이콘"
               />
             </button>
+            
           </div>
+          <div class="error-message" id="password-error"></div>
         </div>
 
         <button type="submit" class="button pill-button full-width" id="login-button">
@@ -139,5 +142,6 @@
       </div>
     </main>
     <script src="scripts/auth.js"></script>
+    <script src="scripts/input_focus_out.js"></script>
   </body>
 </html>
