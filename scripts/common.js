@@ -242,3 +242,29 @@ function handleSignup(event) {
         window.open('login.html', '_self');
     }
 }
+
+/* 추가 요구사항) 눈 모양 아이콘 클릭 시 비밀번호 표시/숨기기 토글 설정 */
+const password_btns = document.getElementById("password_button");
+const password_input_form = document.getElementById("password");
+const password_check_input_form = document.getElementById("passwordConfirmation");
+
+if (password_btns) {
+    password_btns.addEventListener('click', password_btn_func);
+}
+
+function password_btn_func(event) {
+    event.preventDefault();
+
+    if (password_input_form.type === 'password') {
+        password_input_form.type = 'text';
+    } else {
+        password_input_form.type = 'password';
+    }
+
+    if (password_check_input_form.type === 'password') {
+        password_check_input_form.type = 'text';
+    } else {
+        password_check_input_form.type = 'password';
+    }
+
+}
