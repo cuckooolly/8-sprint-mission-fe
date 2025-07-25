@@ -1,8 +1,23 @@
 /*
-질문) 여러 개의 html 파일에 스크립트를 적용할 경우에, Conflict가 발생합니다. 
+질문) 
+여러 개의 html 파일에 스크립트를 적용할 경우에, Conflict가 발생합니다. 
 예를 들어, login.html과 signup.html에 login-button이라는 ID를 가진 버튼과 signup-button이라는 ID를 가진 버튼이 있을 때
 두 html 코드에 이 스크립트를 적용하면, "login_btn.addEventListener('click', handleLogin);"에서 에러가 발생하여 더이상 아래에 있는 코드가 실행되지 않는 현상이 있습니다.
 이러한 현상을 아래에 처리한 if문을 처리한 방법이외에, 다른 방법들이 있을지 궁금합니다.
+
+답변) 
+1. 페이지별 스크립트 분리 -> 함수는 공통의 파일에 저장하되, 이벤트 리스너는 각각의 파일에서 호출한다.
+2. 이벤트 위임을 이용 -> 엘리먼트 전체에서 일어날 수 있는 이벤트를, 자식 엘리먼트 아디든 클릭할 때 발동
+```jsx
+document.addEventListener('click', function(e) {
+    if (e.target.id === 'login-button') {
+        handleLogin(e);
+    }
+    if (e.target.id === 'signup-button') {
+        handleSignup(e);
+    }
+});
+```
 */
 
 const USER_DATA = [
