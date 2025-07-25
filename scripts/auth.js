@@ -22,7 +22,7 @@ document.addEventListener('click', function(e) {
 
 // 로그인을 위한, User login data
 const USER_DATA = [
-    { email: '1@1', password: "1" }, // 테스트용 데이터
+    { email: '1@1.com', password: "1" }, // 테스트용 데이터
     { email: 'codeit1@codeit.com', password: "codeit101!" },
     { email: 'codeit2@codeit.com', password: "codeit202!" },
     { email: 'codeit3@codeit.com', password: "codeit303!" },
